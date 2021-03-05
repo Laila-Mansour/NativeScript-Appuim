@@ -1,4 +1,5 @@
 import io.appium.java_client.MobileBy;
+import io.appium.java_client.android.Activity;
 import io.appium.java_client.android.AndroidDriver;
 import org.openqa.selenium.By;
 import org.openqa.selenium.remote.DesiredCapabilities;
@@ -97,9 +98,28 @@ public class launch {
         driver.launchApp();
 
     }
+    //Put application in the Background ,Open Last Message in the Mobile
+    @Test
+    public void OpenMessage() throws Exception {
+
+        //Click on "GET STARTED" button
+        driver.findElement(By.className("android.widget.Button")).click();
+        //Put application in the Background
+        driver.runAppInBackground(Duration.ofSeconds(4));
+        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+        Activity activity = new Activity("com.android.mms","com.android.mms.ui.ConversationList");
+        driver.startActivity(activity);
+        driver.findElement(By.xpath("/hierarchy/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup/android.widget.FrameLayout[2]/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.ListView/android.widget.FrameLayout[1]/com.huawei.mms.ui.AvatarWidget/android.widget.LinearLayout[2]/android.widget.RelativeLayout/android.widget.RelativeLayout\n")).click();
+        Activity activity1 = new Activity("org.nativescript.examples","com.tns.NativeScriptActivity");
+        driver.startActivity(activity1);
+
+
+
+
+    }
 
     @AfterMethod
-    public void closepp() throws Exception {
+    public void closeapp() throws Exception {
         Thread.sleep(5000);
         driver.closeApp();
     }
