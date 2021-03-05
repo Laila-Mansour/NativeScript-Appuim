@@ -31,6 +31,8 @@ public class launch {
 //Make New Reservation Test Case
     @Test
     public void Reservations() throws Exception{
+        driver.launchApp();
+        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
         //Click on "GET STARTED" button
         driver.findElement(By.className("android.widget.Button")).click();
         //	Scroll down “Reservations”
