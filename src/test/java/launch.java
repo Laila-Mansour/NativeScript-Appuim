@@ -1,6 +1,8 @@
 import io.appium.java_client.MobileBy;
 import io.appium.java_client.android.Activity;
 import io.appium.java_client.android.AndroidDriver;
+import io.appium.java_client.android.nativekey.AndroidKey;
+import io.appium.java_client.android.nativekey.KeyEvent;
 import org.openqa.selenium.By;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.testng.annotations.AfterMethod;
@@ -15,6 +17,7 @@ public class launch {
     AndroidDriver driver;
     @BeforeMethod
     public void startPoint() throws Exception {
+
         DesiredCapabilities capabilities = new DesiredCapabilities();
         capabilities.setCapability("platformName", "Android");
         capabilities.setCapability("deviceName", "Lily");
@@ -30,9 +33,6 @@ public class launch {
     public void Reservations() throws Exception{
         //Click on "GET STARTED" button
         driver.findElement(By.className("android.widget.Button")).click();
-        //Put application in the Background
-        driver.runAppInBackground(Duration.ofSeconds(1));
-        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
         //	Scroll down “Reservations”
         driver.findElement(MobileBy.AndroidUIAutomator("new UiScrollable(new UiSelector()).scrollIntoView(text(\"Reservations\"))"));
         driver.findElement(MobileBy.AndroidUIAutomator("text(\"Reservations\")")).click();
@@ -102,19 +102,20 @@ public class launch {
     @Test
     public void OpenMessage() throws Exception {
 
+
+
         //Click on "GET STARTED" button
         driver.findElement(By.className("android.widget.Button")).click();
         //Put application in the Background
-        driver.runAppInBackground(Duration.ofSeconds(4));
+        driver.runAppInBackground(Duration.ofSeconds(5));
+        driver.pressKey(new KeyEvent(AndroidKey.HOME));
         driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
         Activity activity = new Activity("com.android.mms","com.android.mms.ui.ConversationList");
         driver.startActivity(activity);
         driver.findElement(By.xpath("/hierarchy/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup/android.widget.FrameLayout[2]/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.ListView/android.widget.FrameLayout[1]/com.huawei.mms.ui.AvatarWidget/android.widget.LinearLayout[2]/android.widget.RelativeLayout/android.widget.RelativeLayout\n")).click();
+        Thread.sleep(5000);
         Activity activity1 = new Activity("org.nativescript.examples","com.tns.NativeScriptActivity");
         driver.startActivity(activity1);
-
-
-
 
     }
 
@@ -122,5 +123,6 @@ public class launch {
     public void closeapp() throws Exception {
         Thread.sleep(5000);
         driver.closeApp();
+        driver.pressKey(new KeyEvent(AndroidKey.HOME));
     }
 }
